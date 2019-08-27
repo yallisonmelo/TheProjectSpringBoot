@@ -1,0 +1,8 @@
+language: java
+jdk:
+  - oraclejdk8
+dist: trusty
+
+addons:
+  sonarcloud:
+    organization: "nosbielc-github" # the key of the org you chose at step #3
