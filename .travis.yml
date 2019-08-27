@@ -5,4 +5,4 @@ dist: trusty
 
 addons:
   sonarcloud:
-    organization: "nosbielc-github" # the key of the org you chose at step #3
+    organization: "yallisonmelo-github" # the key of the org you chose at step #3
