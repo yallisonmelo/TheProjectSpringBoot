@@ -1,4 +1,4 @@
-package controller;
+package br.com.yfsm.theprojectspringboot.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

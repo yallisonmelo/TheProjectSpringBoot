@@ -1,8 +1,7 @@
-package domain;
+package br.com.yfsm.theprojectspringboot.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

@@ -1,6 +1,6 @@
 package repository;
 
-import domain.User;
+import br.com.yfsm.theprojectspringboot.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
