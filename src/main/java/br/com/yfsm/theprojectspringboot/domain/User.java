@@ -1,10 +1,10 @@
 package br.com.yfsm.theprojectspringboot.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -18,6 +18,7 @@ import java.util.Date;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank
     private String name;
@@ -28,6 +29,8 @@ public class User {
     @NotBlank
     private Boolean active = true;
     @NotBlank
+    @CreatedDate
     private Date dateInsert;
+    @LastModifiedDate
     private Date dateUpdate;
 }
