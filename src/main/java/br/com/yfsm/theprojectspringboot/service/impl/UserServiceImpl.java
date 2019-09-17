@@ -1,33 +1,41 @@
-package br.com.yfsm.theprojectspringboot.service;
+package br.com.yfsm.theprojectspringboot.service.impl;
 
 import br.com.yfsm.theprojectspringboot.domain.User;
 import br.com.yfsm.theprojectspringboot.exception.UserNotFoundException;
 import br.com.yfsm.theprojectspringboot.repository.UserRepository;
+import br.com.yfsm.theprojectspringboot.service.IUserImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements IUserImpl {
 
 
     @Autowired
     UserRepository userRepository;
 
     public List<User> getListAllUsers(){
-    return   Optional.ofNullable(userRepository.findAll()).orElseThrow(() ->(new UserNotFoundException()));
+    return
+             Optional.ofNullable(
+             userRepository.findAll())
+            .orElseThrow(UserNotFoundException::new
+            );
     }
 
     public User getUserById(Long id){
-        return (userRepository.findById(id)).orElseThrow(UserNotFoundException::new);
+
+        return (
+                userRepository
+                .findById(id))
+                .orElseThrow(UserNotFoundException::new
+                );
     }
 
-
-    public User InsertNewUser(User user){
+    public User insertNewUser(User user){
+        user.setActive(true);
         return userRepository.save(user);
     }
 

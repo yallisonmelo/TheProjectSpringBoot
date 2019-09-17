@@ -5,3 +5,6 @@ spring:
         name: TheSpringApplication
     profiles:
         active: dev
+
+    jpa:
+        open-in-view: false

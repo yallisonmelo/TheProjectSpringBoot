@@ -1,17 +1,19 @@
 package br.com.yfsm.theprojectspringboot.controller;
 
+import br.com.yfsm.theprojectspringboot.domain.User;
+import br.com.yfsm.theprojectspringboot.domain.dto.UserDto;
 import br.com.yfsm.theprojectspringboot.response.Response;
-import br.com.yfsm.theprojectspringboot.service.UserService;
+import br.com.yfsm.theprojectspringboot.service.impl.UserServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -19,7 +21,7 @@ public class UserController {
 
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     HttpHeaders headers;
 
@@ -27,7 +29,7 @@ public class UserController {
     public ResponseEntity<Response> returnListAllUsers(){
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<Response>(new Response(userService.getListAllUsers()),headers, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(userService.getListAllUsers()),headers, HttpStatus.OK);
     }
 
 
@@ -35,7 +37,14 @@ public class UserController {
     public ResponseEntity<Response> returnUserById(@PathVariable Long id){
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<Response>(new Response(userService.getUserById(id)),headers, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(userService.getUserById(id)),headers, HttpStatus.OK);
 
+    }
+
+    @PostMapping
+    public ResponseEntity<Response> insertNewUser(@RequestBody @Valid UserDto userDto, BindingResult result){
+        ModelMapper mapper = new ModelMapper();
+        User user = mapper.map(userDto, User.class);
+        return new ResponseEntity<>(new Response(userService.insertNewUser(user)),headers,HttpStatus.CREATED);
     }
 }

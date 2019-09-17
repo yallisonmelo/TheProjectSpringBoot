@@ -26,11 +26,17 @@ public class User {
     private String email;
     @NotBlank
     private String password;
-    @NotBlank
-    private Boolean active = true;
-    @NotBlank
+    private Boolean active;
     @CreatedDate
-    private Date dateInsert;
+    private Date dateInsert = new Date();
     @LastModifiedDate
     private Date dateUpdate;
+
+
+    public User(@NotBlank String name, @NotBlank String email, @NotBlank String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.setActive(true);
+    }
 }
