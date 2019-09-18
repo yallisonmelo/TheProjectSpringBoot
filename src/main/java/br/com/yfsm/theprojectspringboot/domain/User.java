@@ -1,8 +1,9 @@
 package br.com.yfsm.theprojectspringboot.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -27,9 +28,13 @@ public class User {
     @NotBlank
     private String password;
     private Boolean active;
-    @CreatedDate
-    private Date dateInsert = new Date();
-    @LastModifiedDate
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateInsert;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateUpdate;
 
 
@@ -38,5 +43,10 @@ public class User {
         this.email = email;
         this.password = password;
         this.setActive(true);
+    }
+
+    public String setHashPassword(String password) {
+       return new StringBuilder(password).reverse().toString();
+
     }
 }

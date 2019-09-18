@@ -39,16 +39,21 @@ public class UserServiceImpl implements IUserImpl {
         return userRepository.save(user);
     }
 
-    public User updateUser(User user){
-        if (userRepository.findById(user.getId()).isPresent()) {
+
+    public User updateUser(User user, Long id){
+     return  userRepository.findById(id).map(obj ->{
+            obj.setName(user.getName());
+            obj.setEmail(user.getEmail());
+            obj.setPassword(user.setHashPassword(user.getPassword()));
+            return userRepository.save(obj);
+        }) .orElseGet(() -> {
+            user.setId(id);
             return userRepository.save(user);
-        }else{
-            return user;
-        }
+        });
     }
 
 
-    public void deleteUser(User user){
-        userRepository.delete(user);
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
     }
 }

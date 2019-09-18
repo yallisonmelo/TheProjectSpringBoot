@@ -9,6 +9,6 @@ public interface IUserImpl {
      List<User> getListAllUsers();
      User getUserById(Long id);
      User insertNewUser(User user);
-     User updateUser(User user);
-     void deleteUser(User user);
+     User updateUser(User user, Long id);
+     void deleteUser(Long id);
 }
