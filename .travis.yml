@@ -6,3 +6,14 @@ dist: trusty
 addons:
   sonarcloud:
     organization: "yallisonmelo-github" # the key of the org you chose at step #3
+
+
+addons:
+  sonarcloud:
+    organization: "yallisonmelo"
+    token:
+      secure: "**************************" # encrypted value of your token
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yallisonmelo_TheProjectSpringBoot
