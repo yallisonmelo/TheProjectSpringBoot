@@ -19,50 +19,51 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
-
     @Autowired
     UserServiceImpl userService;
 
     HttpHeaders headers;
 
-    @GetMapping
-    public ResponseEntity<Response> returnListAllUsers(){
+    public UserController() {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(new Response(userService.getListAllUsers()),headers, HttpStatus.OK);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Response> returnListAllUsers() {
+
+        return new ResponseEntity<>(new Response(userService.getListAllUsers()), headers, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response> returnUserById(@PathVariable Long id){
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(new Response(userService.getUserById(id)),headers, HttpStatus.OK);
+    public ResponseEntity<Response> returnUserById(@PathVariable Long id) {
+        return new ResponseEntity<>(new Response(userService.getUserById(id)), headers, HttpStatus.OK);
 
     }
 
     @PostMapping
-    public ResponseEntity<Response> insertNewUser(@RequestBody @Valid UserDto userDto, BindingResult result){
+    public ResponseEntity<Response> insertNewUser(@RequestBody @Valid UserDto userDto, BindingResult result) {
         ModelMapper mapper = new ModelMapper();
         User user = mapper.map(userDto, User.class);
-        return new ResponseEntity<>(new Response(userService.insertNewUser(user)),headers,HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response(userService.insertNewUser(user)), headers, HttpStatus.CREATED);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Response> updateUser(@RequestBody @Valid UserDto userDto, @PathVariable Long id){
+    public ResponseEntity<Response> updateUser(@RequestBody @Valid UserDto userDto, @PathVariable Long id) {
         ModelMapper mapper = new ModelMapper();
         User user = mapper.map(userDto, User.class);
-        return new ResponseEntity<>(new Response(userService.updateUser(user,id)),headers,HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response(userService.updateUser(user, id)), headers, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Response> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteUser(id);
             return new ResponseEntity<>(new Response("User Deleted"), headers, HttpStatus.NO_CONTENT);
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return new ResponseEntity<>(new Response("Operation Fail"), headers, HttpStatus.NOT_FOUND);
         }
     }
