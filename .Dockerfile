@@ -1,6 +1,11 @@
-FROM anapsix/alpine-java:8
+FROM openjdk:8-jre-alpine
 
-VOLUME /tmp
-ADD /target/microservice-dashboard.jar dashboard.jar
-RUN sh -c 'touch /dashboard.jar'
-CMD java -Djava.security.egd=file:/dev/./urandom -jar /dashboard.jar
+ENV LANG C.UTF-8
+RUN mkdir /app
+WORKDIR /app
+COPY target/theprojectspringboot-1.0.0.jar  theprojectspringboot.jar 
+
+ENTRYPOINT exec java \
+$JAVA_OPTS \
+$APP_ARGS
+EXPOSE 9090
